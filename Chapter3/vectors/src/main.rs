@@ -2,6 +2,13 @@ fn print_type_of<T>(_: &T) {
     println!("{}", std::any::type_name::<T>())
 }
 
+// either an array or a vector can be a slice
+fn add_one(a: &mut [i32]) {
+    for i in 0..a.len() {
+        a[i] += 1;
+    }
+}
+
 fn arrays() {
     let a = [0; 6];               // array, size known at compile time
     print!("a is "); print_type_of(&a);
@@ -39,6 +46,9 @@ fn arrays() {
     g[1] = 40;
 
     println!("{:?}", b);   // changes to g[] reflected in b
+
+    add_one(&mut b);   // ok to call with array slice
+    println!("{:?}", b);
 
     println!();
 }
@@ -90,6 +100,9 @@ fn vectors() {
     g[1] = 40;
 
     println!("{:?}", d);   // changes to g[] reflected in b
+
+    add_one(&mut d);   // ok to call with vector slice
+    println!("{:?}", d);
     
     println!();
 }
